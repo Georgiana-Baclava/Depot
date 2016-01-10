@@ -1,0 +1,46 @@
+Baclava Georgiana Liliana
+313CB
+
+	Pentru tema 2 am folosit 3 fisiere: main.c, train.c si train.h.
+
+	In fisierul train.h am definit structurile de tipul depou, stiva, respectiv lista. Depoul il consider o structura formata dintr-un vector de stive si un numar L al stivelor din depou. VF(a) si DIME(a) sunt 2 macrouri pentru varful stivei, respectiv dimensiunea unui element din stiva. Tot in train.h sunt prototipurile fuctiilor definite in fisierul train.c.
+
+	In fisierul train.c:
+
+	-Functia InitS initializeaza o stiva si intoarce adresa acesteia sau NULL in caz de esec;
+	-Functia InitD initializeaza un depou si intoarce adresa depoului sau NULL in caz de esec;
+	-Functia isEmpty returneaza 1 daca varful stivei este NULL, deci stiva este vida sau 0 in caz contrar;
+	-Functia Push creeaza o celula de tip TCelulaG, copiaza informatia primita ca parametru si insereaza celula ca element al unei stive primite tot ca parametru.
+	-Functia Pop extrage un element de la adresa s doar daca stiva s nu este vida. Daca stiva contine elemente, copiaza informatia din varful stivei, apoi elimina elementul din varful stivei;
+ 	-Functia Top obtine informatia din varful stivei daca stiva nu este vida;
+	-Functia DistrS elibereaza spatiul pentru lista daca stiva nu este vida, elibereaza spatiu pentru varful stivei si pentru descriptorul de structura;
+	-Functia ElibD elibereaza spatiul alocat pentru depou.
+	Pentru fiecare stiva din depou elibereaza spatiu cu ajutorul functiei DistrS, apoi elibereaza spatiu pentru vectorul de stive si pentru descriptorul de structura.
+
+	In fisierul main.c am definit o structura pentru numarul de vagoane si tipul lor.
+	-Functia Rastoarna retine in stiva ad rasturnata stivei as. Astfel ad, stiva destinatie devine stiva rasturnata a stivei as, stiva sursa;
+	-Functia AfisareD pentru fiecare stiva din depou, ii afisaza indicele si numarul de elemente din stiva, apoi o rastoarna cu ajutorul functie Rastoarna. Cat timp exista elemente in stiva noua, daca nu exista element urmator afiseaza numarul vagoanelor si tipul reprezentat de informatia din celula listei. Daca informatia coincide cu cea din celula urmatoare numarul vagoanelor de acel tip creste cu 1. In caz contrar, se afiseaza numarul vagoanelor de acelasi tip si tipul lor gasite pana la acel moment, numarul vagoanelor devine 1 si tipul vagonului se initializeaza cu informatia gasita in celula urmatoare. La sfarsit se distruge stiva rasturnata;
+	-Functia Verifica o folosesc pentru optiunea 0 cand verific daca exista spatiu in depou pentru acomodarea unui tren. Returneaza 1 in caz afirmativ, 0 in caz contrar.
+	-Functia Acomodare este functia pentru descarcarea trenului in depou. De la prima linie a depoului se cauta spatiu de acomodare a fiecarui vagon. Daca este plina se trece la urmatoarea linie. Daca linia curenta nu este plina se extrage un element din stiva tren si se insereaza pe linia respectiva. Daca se ajunge la ultima linie se insereaza daca nu este plina si se revine la prima linie. Returneaza adresa depoului;
+	-Functia Cauta returneaza 1 daca vagonul cautat se afla pe linia respectiva, 0 in caz contrar;
+	-Functia CautaVagoaneS returneaza numarul vagoanelor de un anumit tip dintr-o stiva;
+	-Functia Construire insereaza in stiva trenului care trebuie construit, vagonul cautat. Cand se gaseste vagonul in depou se obtine valoarea elementului din stiva pe care s-a gasit vagonul. Daca nu coincide cu vagonul cautat, se muta pe linia urmatoare daca nu este plina. Circularitatea se pastreaza ca la acomodare, dar linia de unde se face extragerea se sare. Cand valoarea elementul din varful stivei coincide cu vagonul cautat se extrage si se insereaza in stiva trenului;
+	-Functia CautaVagoaneD intoarce numarul de vagoane de un anumit tip din depou;
+	-Functia CheckVagoaneD verifica daca numarul de vagoane de un anumit tip, cerut pentru construirea unui tren este mai mare decat numarul acestora in depou. In acest caz nu se poate forma trenul si intoarce -1. In caz contrar, returneza 1.
+
+	In main deschid fisierul de input,citesc de pe prima linie a fisierului numarul liniilor din depou, numarul maxim al elementelor de pe fiecare linie, numarul de operatii si initializez depoul.
+	Cat timp nu am terminat de realizat toate operatiile, aflu numarul de vagoane din depou la momentul respectiv, citesc tipul operatiei si lungimea maxima a trenului. 
+
+	-Daca trebuie acomodat un tren cu o lungime mai mare decat spatiul liber a depoului, afisez un mesaj de eroare si trec la linia urmatoare a fisierului;
+
+	-Daca trebuie acomodat un tren, iar spatiul liber al depoului este mai mare sau egal cu lungimea trenului, initializez stiva train. Cat timp nu am terminat de citit vagoanele si tipul lor, citesc numarul vagoanelor tr.nrVag si tipul tr.tipVag si inserez in stiva train tr.nrVag vagoane de tipul respectiv. Apelez functia Acomodare, apoi distrug stiva in care am retinut trenul;
+
+	-Daca trebuie construit un tren, iar numarul vagoanelor din depou la momentul respectiv este mai mic decat lungimea maxima a trenului, afisez un mesaj de eroare si trec la linia urmatoare a fisierului;
+
+	-Altfel, daca trebuie construit un tren si numarul vagoanelor din depou este mai mare sau egal cu lungimea maxima a trenului initializez stiva in care construiesc trenul, stiva in care retin trenul la citire si stiva resturnata a stivei de la citire. Cat timp nu am terminat de citit vagoanele si tipul lor, citesc numarul vagoanelor tr.nrVag si tipul tr.tipVag si verific daca numarul de vagoane cerut pentru construirea trenului este mai mic sau egal cu numarul vagoanelor de acelasi tip din depou. In cazul in care numarul vagoanelor din depou este mai mic, afisez un mesaj de eroare. Altfel construiesc stiva trenului citit.
+Verific daca intr-adevar am toate vagoanele in depou. In acest caz afisez mesajul de eroare. Altfel, daca operatia 1 este posibila, stiva in care am retinut componentele trenului de construit o rastorn in stiva rs si, cat timp rs nu este vida extrag cate un element din stiva rs si apelez functia Construire. La sfarsit distrug stivele initializate.
+
+	Pentru fiecare optiune afisez depoul, initializez numarul vagoanelor cu 0, iar numarul optiunilor scade cu 1.
+	
+	La sfarsit, inchid fisierul si eliberez depoul.
+
